@@ -66,6 +66,18 @@
                 color: white;
             }
 
+            button#copyButton {
+                background-color: #34495e;
+                color: white;
+                margin-top: 10px;
+            }
+
+        .spinner {
+            margin-top: 10px;
+            color: #999;
+            font-style: italic;
+        }
+
         h3 {
             margin-top: 20px;
             color: #2c3e50;
@@ -108,17 +120,35 @@
 
     <h3>Polished Email</h3>
     <div id="result" class="result"></div>
+    <button type="button" id="copyButton" style="display:none;">Copy to Clipboard</button>
+    <div id="spinner" class="spinner" style="display:none;">Working on your request...</div>
 
     <script>
 async function sendToBackend(emailText, tone, instructions) {
-    const response = await fetch('https://copilot-email-polisher.onrender.com/polish-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: emailText, tone, instructions })
-    });
+    const resultDiv = document.getElementById('result');
+    const spinner = document.getElementById('spinner');
+    const copyButton = document.getElementById('copyButton');
 
-    const data = await response.json();
-    document.getElementById('result').textContent = data.polished_email || JSON.stringify(data, null, 2);
+    resultDiv.textContent = '';
+    spinner.style.display = 'block';
+    copyButton.style.display = 'none';
+
+    try {
+        const response = await fetch('https://copilot-email-polisher.onrender.com/polish-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: emailText, tone, instructions })
+        });
+
+        const data = await response.json();
+        resultDiv.textContent = data.polished_email || JSON.stringify(data, null, 2);
+
+        copyButton.style.display = 'inline-block';
+    } catch (error) {
+        resultDiv.textContent = 'Error: ' + error.message;
+    } finally {
+        spinner.style.display = 'none';
+    }
 }
 
 document.getElementById('polishButton').addEventListener('click', async function () {
@@ -145,6 +175,15 @@ document.getElementById('refineButton').addEventListener('click', async function
     }
 
     await sendToBackend(polishedEmail, tone, instructions);
+});
+
+document.getElementById('copyButton').addEventListener('click', () => {
+    const polishedEmail = document.getElementById('result').textContent.trim();
+    navigator.clipboard.writeText(polishedEmail).then(() => {
+        alert("Polished email copied to clipboard!");
+    }).catch(err => {
+        alert("Failed to copy: " + err);
+    });
 });
     </script>
 </body>
