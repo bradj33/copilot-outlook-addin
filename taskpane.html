@@ -21,18 +21,21 @@
 
         button {
             padding: 10px 20px;
+            margin-right: 5px;
         }
 
-        pre {
+        pre, .result {
             background: #f4f4f4;
             padding: 10px;
             white-space: pre-wrap;
             border: 1px solid #ccc;
+            min-height: 80px;
         }
     </style>
 </head>
 <body>
     <h2>Polish Your Email</h2>
+
     <form id="emailForm">
         <label for="email">Enter your rough email:</label>
         <textarea id="email" name="email" required></textarea>
@@ -47,32 +50,52 @@
         <label for="instructions">Optional extra instructions:</label>
         <input type="text" id="instructions" name="instructions" placeholder="e.g., make it more detailed" />
 
-        <button type="submit">Polish Email</button>
+        <div>
+            <button type="button" id="polishButton">Polish Email</button>
+            <button type="button" id="refineButton">Refine Polished Email</button>
+        </div>
     </form>
 
     <h3>Polished Email:</h3>
-    <pre id="result"></pre>
+    <div id="result" class="result"></div>
 
     <script>
-        document.getElementById('emailForm').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const tone = document.getElementById('tone').value;
-            const instructions = document.getElementById('instructions').value;
-
-            try {
-                const response = await fetch('https://copilot-email-polisher.onrender.com/polish-email', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, tone, instructions })
-                });
-
-                const data = await response.json();
-                document.getElementById('result').textContent = data.polished_email || JSON.stringify(data, null, 2);
-            } catch (error) {
-                document.getElementById('result').textContent = 'Error: ' + error.message;
-            }
+    async function sendToBackend(emailText, tone, instructions) {
+        const response = await fetch('https://copilot-email-polisher.onrender.com/polish-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: emailText, tone, instructions })
         });
+
+        const data = await response.json();
+        document.getElementById('result').textContent = data.polished_email || JSON.stringify(data, null, 2);
+    }
+
+    document.getElementById('polishButton').addEventListener('click', async function () {
+        const email = document.getElementById('email').value.trim();
+        const tone = document.getElementById('tone').value;
+        const instructions = document.getElementById('instructions').value.trim();
+
+        if (!email) {
+            alert("Please enter your rough email first.");
+            return;
+        }
+
+        await sendToBackend(email, tone, instructions);
+    });
+
+    document.getElementById('refineButton').addEventListener('click', async function () {
+        const polishedEmail = document.getElementById('result').textContent.trim();
+        const tone = document.getElementById('tone').value;
+        const instructions = document.getElementById('instructions').value.trim();
+
+        if (!polishedEmail) {
+            alert("No polished email to refine yet. Please polish your email first.");
+            return;
+        }
+
+        await sendToBackend(polishedEmail, tone, instructions);
+    });
     </script>
 </body>
 </html>
