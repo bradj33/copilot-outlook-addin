@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +9,17 @@
             margin: 20px;
         }
 
-        textarea {
+        textarea, select, input {
             width: 100%;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
             height: 120px;
         }
 
         button {
-            margin-top: 10px;
             padding: 10px 20px;
         }
 
@@ -24,36 +27,52 @@
             background: #f4f4f4;
             padding: 10px;
             white-space: pre-wrap;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
     <h2>Polish Your Email</h2>
     <form id="emailForm">
-        <label for="email">Enter your rough email:</label><br>
-        <textarea id="email" name="email" required></textarea><br>
+        <label for="email">Enter your rough email:</label>
+        <textarea id="email" name="email" required></textarea>
+
+        <label for="tone">Select tone:</label>
+        <select id="tone" name="tone">
+            <option value="neutral">Neutral</option>
+            <option value="friendly">Friendly</option>
+            <option value="professional">Professional</option>
+        </select>
+
+        <label for="instructions">Optional extra instructions:</label>
+        <input type="text" id="instructions" name="instructions" placeholder="e.g., make it more detailed" />
+
         <button type="submit">Polish Email</button>
     </form>
 
     <h3>Polished Email:</h3>
     <pre id="result"></pre>
 
-    <script>document.getElementById('emailForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const tone = document.getElementById('tone').value;
+            const instructions = document.getElementById('instructions').value;
 
-      try {
-        const response = await fetch('https://copilot-email-polisher.onrender.com/polish-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
+            try {
+                const response = await fetch('https://copilot-email-polisher.onrender.com/polish-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, tone, instructions })
+                });
+
+                const data = await response.json();
+                document.getElementById('result').textContent = data.polished_email || JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('result').textContent = 'Error: ' + error.message;
+            }
         });
-
-        const data = await response.json();
-        document.getElementById('result').textContent = data.polished_email || JSON.stringify(data, null, 2);
-      } catch (error) {
-        document.getElementById('result').textContent = 'Error: ' + error.message;
-      }
-    });</script>
+    </script>
 </body>
 </html>
