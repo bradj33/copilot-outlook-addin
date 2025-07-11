@@ -25,7 +25,9 @@
 
 	<Permissions>ReadWriteItem</Permissions>
 
-	<VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" Version="1.0">
+	<VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+					  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+					  Version="1.0">
 		<Hosts>
 			<Host xsi:type="MailHost">
 				<DesktopFormFactor>
@@ -74,7 +76,6 @@
 							</Group>
 						</OfficeTab>
 					</ExtensionPoint>
-
 				</DesktopFormFactor>
 			</Host>
 		</Hosts>
@@ -96,6 +97,5 @@
 				<bt:String id="buttonDesc" DefaultValue="Polish and rewrite your email for improved tone and clarity."/>
 			</bt:LongStrings>
 		</Resources>
-
 	</VersionOverrides>
 </OfficeApp>
