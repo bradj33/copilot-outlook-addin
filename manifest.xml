@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:type="MessageRead">
+	<Id>5766e845-9a18-4e23-8f36-7354d4341cbb</Id>
+	<Version>1.0.0.0</Version>
+	<ProviderName>Brad J</ProviderName>
+	<DefaultLocale>en-US</DefaultLocale>
+
+	<DisplayName DefaultValue="Email Polisher"/>
+	<Description DefaultValue="Polish and rewrite your emails with GPT-4."/>
+	<IconUrl DefaultValue="https://bradj33.github.io/copilot-outlook-addin/icon.png"/>
+	<HighResolutionIconUrl DefaultValue="https://bradj33.github.io/copilot-outlook-addin/icon.png"/>
+	<SupportUrl DefaultValue="https://github.com/bradj33/copilot-outlook-addin"/>
+
+	<Hosts>
+		<Host Name="Mailbox"/>
+	</Hosts>
+
+	<Requirements>
+		<Sets DefaultMinVersion="1.5">
+			<Set Name="Mailbox"/>
+		</Sets>
+	</Requirements>
+
+	<Permissions>ReadWriteItem</Permissions>
+
+	<VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" Version="1.0">
+		<Hosts>
+			<Host xsi:type="MailHost">
+				<DesktopFormFactor>
+					<ExtensionPoint xsi:type="MessageReadCommandSurface">
+						<OfficeTab id="TabDefault">
+							<Group id="msgReadGroup">
+								<Label resid="groupLabel"/>
+								<Control xsi:type="Button" id="msgReadButton">
+									<Label resid="buttonLabel"/>
+									<Supertip>
+										<Title resid="buttonLabel"/>
+										<Description resid="buttonDesc"/>
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="icon16"/>
+										<bt:Image size="32" resid="icon32"/>
+										<bt:Image size="80" resid="icon80"/>
+									</Icon>
+									<Action xsi:type="ShowTaskPane">
+										<SourceLocation resid="taskpaneUrl"/>
+									</Action>
+								</Control>
+							</Group>
+						</OfficeTab>
+					</ExtensionPoint>
+
+					<ExtensionPoint xsi:type="MessageComposeCommandSurface">
+						<OfficeTab id="TabDefault">
+							<Group id="msgComposeGroup">
+								<Label resid="groupLabel"/>
+								<Control xsi:type="Button" id="msgComposeButton">
+									<Label resid="buttonLabel"/>
+									<Supertip>
+										<Title resid="buttonLabel"/>
+										<Description resid="buttonDesc"/>
+									</Supertip>
+									<Icon>
+										<bt:Image size="16" resid="icon16"/>
+										<bt:Image size="32" resid="icon32"/>
+										<bt:Image size="80" resid="icon80"/>
+									</Icon>
+									<Action xsi:type="ShowTaskPane">
+										<SourceLocation resid="taskpaneUrl"/>
+									</Action>
+								</Control>
+							</Group>
+						</OfficeTab>
+					</ExtensionPoint>
+
+				</DesktopFormFactor>
+			</Host>
+		</Hosts>
+
+		<Resources>
+			<bt:Images>
+				<bt:Image id="icon16" DefaultValue="https://bradj33.github.io/copilot-outlook-addin/icon.png"/>
+				<bt:Image id="icon32" DefaultValue="https://bradj33.github.io/copilot-outlook-addin/icon.png"/>
+				<bt:Image id="icon80" DefaultValue="https://bradj33.github.io/copilot-outlook-addin/icon.png"/>
+			</bt:Images>
+			<bt:Urls>
+				<bt:Url id="taskpaneUrl" DefaultValue="https://bradj33.github.io/copilot-outlook-addin/taskpane.html"/>
+			</bt:Urls>
+			<bt:ShortStrings>
+				<bt:String id="groupLabel" DefaultValue="Email Tools"/>
+				<bt:String id="buttonLabel" DefaultValue="Polish Email"/>
+			</bt:ShortStrings>
+			<bt:LongStrings>
+				<bt:String id="buttonDesc" DefaultValue="Polish and rewrite your email for improved tone and clarity."/>
+			</bt:LongStrings>
+		</Resources>
+
+	</VersionOverrides>
+</OfficeApp>
