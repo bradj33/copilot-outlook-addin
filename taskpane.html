@@ -148,6 +148,7 @@ async function sendToBackend(emailText, tone, instructions) {
         resultDiv.textContent = 'Error: ' + error.message;
     } finally {
         spinner.style.display = 'none';
+        document.getElementById('instructions').value = '';
     }
 }
 
