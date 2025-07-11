@@ -120,6 +120,9 @@
             <label for="email">Rough draft email</label>
             <textarea id="email" name="email" placeholder="Write or paste your email here..." required></textarea>
 
+    <div id="charCount" style="font-size: 12px; color: #666; text-align: right;">
+        Characters: 0 / 10000
+    </div>
             <label for="tone">Tone</label>
             <select id="tone" name="tone">
                 <option value="neutral">Neutral</option>
@@ -205,6 +208,31 @@ document.getElementById('copyButton').addEventListener('click', () => {
         alert("Failed to copy: " + err);
     });
 });
+
+        const MAX_CHARS = 10000;
+
+        function updateCharCount() {
+            const emailText = document.getElementById('email').value;
+            const resultText = document.getElementById('result').textContent.trim();
+            const activeText = emailText || resultText;
+
+            const chars = activeText.length;
+            const counter = document.getElementById('charCount');
+
+            counter.textContent = `Characters: ${chars} / ${MAX_CHARS}`;
+
+            if (chars > MAX_CHARS) {
+                counter.style.color = 'red';
+            } else {
+                counter.style.color = '#666';
+            }
+        }
+
+        document.getElementById('email').addEventListener('input', updateCharCount);
+        document.getElementById('result').addEventListener('input', updateCharCount);
+
+        updateCharCount();
+
     </script>
 </body>
 </html>
