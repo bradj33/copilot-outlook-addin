@@ -131,9 +131,9 @@
             <label for="email">Rough draft email</label>
             <textarea id="email" name="email" placeholder="Write or paste your email here..." required></textarea>
 
-    <div id="charCount" style="font-size: 12px; color: #666; text-align: right;">
-        Characters: 0 / 10000
-    </div>
+            <div id="charCount" style="font-size: 12px; color: #666; text-align: right;">
+                Characters: 0 / 10000
+            </div>
             <label for="tone">Tone</label>
             <select id="tone" name="tone">
                 <option value="neutral">Neutral</option>
@@ -155,6 +155,10 @@
         <div id="result" class="result" contenteditable="true"></div>
         <button type="button" id="copyButton" style="display:none;">Copy to Clipboard</button>
         <div id="spinner" class="spinner" style="display:none;">Working on your request...</div>
+
+        <p style="font-size: 12px; color: #888; text-align: center; margin-top: 20px;">
+            Please avoid submitting sensitive or confidential information through this tool.
+        </p>
     </div>
 
     <script>
