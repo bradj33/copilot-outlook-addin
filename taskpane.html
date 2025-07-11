@@ -136,6 +136,8 @@
             <div class="button-group">
                 <button type="button" id="polishButton">Polish Email</button>
                 <button type="button" id="refineButton">Refine Polished Email</button>
+                <button type="button" id="sendOutlookButton" style="margin-top: 10px;">Send to Outlook</button>
+
             </div>
         </form>
 
@@ -232,6 +234,19 @@ document.getElementById('copyButton').addEventListener('click', () => {
         document.getElementById('result').addEventListener('input', updateCharCount);
 
         updateCharCount();
+        document.getElementById('sendOutlookButton').addEventListener('click', () => {
+            const polishedEmail = document.getElementById('result').textContent.trim();
+            if (!polishedEmail) {
+                alert("No polished email to send. Please polish your email first.");
+                return;
+            }
+
+            const subject = encodeURIComponent("Your Subject Here");
+            const body = encodeURIComponent(polishedEmail);
+            const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+
+            window.location.href = mailtoLink;
+        });
 
     </script>
 </body>
