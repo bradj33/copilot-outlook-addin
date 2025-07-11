@@ -92,8 +92,16 @@
             button#sendOutlookButton {
                 background-color: #9b59b6;
                 color: white;
+                height: 40px;
+                padding: 10px 16px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 600;
                 margin-top: 10px;
             }
+
 
         .spinner {
             margin-top: 10px;
@@ -247,12 +255,23 @@ document.getElementById('copyButton').addEventListener('click', () => {
                 return;
             }
 
-            const subject = encodeURIComponent("Polished Email");
-            const body = encodeURIComponent(polishedEmail.replace(/\n/g, "%0D%0A"));
-            const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+            let subject = "Polished Email";
+            let body = polishedEmail;
+
+            // Try to extract a Subject: line from the polished text
+            const subjectMatch = polishedEmail.match(/^Subject:\s*(.*)$/im);
+            if (subjectMatch) {
+                subject = subjectMatch[1].trim();
+                body = polishedEmail.replace(subjectMatch[0], "").trim();
+            }
+
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(body.replace(/\n/g, "\r\n"));
+            const mailtoLink = `mailto:?subject=${encodedSubject}&body=${encodedBody}`;
 
             window.location.href = mailtoLink;
         });
+
 
 
     </script>
