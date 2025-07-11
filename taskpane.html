@@ -10,6 +10,13 @@
             padding: 20px;
             background-color: #f9f9f9;
             color: #333;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
         }
 
         h2 {
@@ -39,6 +46,16 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
+        }
+
+            textarea#email {
+                height: 200px;
+            }
+
+        select {
+            appearance: none;
+            background: #fff url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='16'%20height='16'%20viewBox='0%200%2016%2016'%3E%3Cpath%20fill='%23333'%20d='M4%206l4%204%204-4z'/%3E%3C/svg%3E") no-repeat right 8px center;
+            background-size: 12px;
         }
 
         .button-group {
@@ -88,7 +105,7 @@
             border: 1px solid #ddd;
             border-radius: 6px;
             padding: 15px;
-            min-height: 80px;
+            min-height: 100px;
             white-space: pre-wrap;
             box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
         }
@@ -96,32 +113,34 @@
 </head>
 <body>
 
-    <h2>Email Polisher</h2>
+    <div class="container">
+        <h2>Email Polisher</h2>
 
-    <form id="emailForm">
-        <label for="email">Rough draft email</label>
-        <textarea id="email" name="email" placeholder="Write or paste your email here..." required></textarea>
+        <form id="emailForm">
+            <label for="email">Rough draft email</label>
+            <textarea id="email" name="email" placeholder="Write or paste your email here..." required></textarea>
 
-        <label for="tone">Tone</label>
-        <select id="tone" name="tone">
-            <option value="neutral">Neutral</option>
-            <option value="friendly">Friendly</option>
-            <option value="professional">Professional</option>
-        </select>
+            <label for="tone">Tone</label>
+            <select id="tone" name="tone">
+                <option value="neutral">Neutral</option>
+                <option value="friendly">Friendly</option>
+                <option value="professional">Professional</option>
+            </select>
 
-        <label for="instructions">Extra instructions (optional)</label>
-        <input type="text" id="instructions" name="instructions" placeholder="e.g., make it more detailed or concise" />
+            <label for="instructions">Extra instructions (optional)</label>
+            <input type="text" id="instructions" name="instructions" placeholder="e.g., make it more detailed or concise" />
 
-        <div class="button-group">
-            <button type="button" id="polishButton">Polish Email</button>
-            <button type="button" id="refineButton">Refine Polished Email</button>
-        </div>
-    </form>
+            <div class="button-group">
+                <button type="button" id="polishButton">Polish Email</button>
+                <button type="button" id="refineButton">Refine Polished Email</button>
+            </div>
+        </form>
 
-    <h3>Polished Email</h3>
-    <div id="result" class="result" contenteditable="true"></div>
-    <button type="button" id="copyButton" style="display:none;">Copy to Clipboard</button>
-    <div id="spinner" class="spinner" style="display:none;">Working on your request...</div>
+        <h3>Polished Email</h3>
+        <div id="result" class="result" contenteditable="true"></div>
+        <button type="button" id="copyButton" style="display:none;">Copy to Clipboard</button>
+        <div id="spinner" class="spinner" style="display:none;">Working on your request...</div>
+    </div>
 
     <script>
 async function sendToBackend(emailText, tone, instructions) {
