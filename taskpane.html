@@ -89,6 +89,12 @@
                 margin-top: 10px;
             }
 
+            button#sendOutlookButton {
+                background-color: #9b59b6;
+                color: white;
+                margin-top: 10px;
+            }
+
         .spinner {
             margin-top: 10px;
             color: #999;
@@ -136,7 +142,7 @@
             <div class="button-group">
                 <button type="button" id="polishButton">Polish Email</button>
                 <button type="button" id="refineButton">Refine Polished Email</button>
-                <button type="button" id="sendOutlookButton" style="margin-top: 10px;">Send to Outlook</button>
+                <button type="button" id="sendOutlookButton">Send to Outlook</button>
 
             </div>
         </form>
@@ -241,12 +247,13 @@ document.getElementById('copyButton').addEventListener('click', () => {
                 return;
             }
 
-            const subject = encodeURIComponent("Your Subject Here");
-            const body = encodeURIComponent(polishedEmail);
+            const subject = encodeURIComponent("Polished Email");
+            const body = encodeURIComponent(polishedEmail.replace(/\n/g, "%0D%0A"));
             const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
 
             window.location.href = mailtoLink;
         });
+
 
     </script>
 </body>
